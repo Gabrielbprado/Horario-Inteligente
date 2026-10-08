@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<title>Horário Inteligente — marca</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --tinta:#4F46E5; --marca:#FFD60A; --papel:#FFFFFF; --nanquim:#141620; --suave:#60667A; --fundo:#FAFAFC; --borda:#E2E4EC; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--nanquim); background: var(--fundo); -webkit-font-smoothing: antialiased; }
+  h1, h2, .display { font-family: 'Inter Display', 'Inter', system-ui, sans-serif; letter-spacing: -0.025em; }
+
+  .capa { background: var(--tinta); color: var(--papel); padding: 88px 96px; display: grid; grid-template-columns: auto 1fr; gap: 80px; align-items: center; }
+  .capa svg { width: 320px; height: 320px; display: block; }
+  .capa h1 { font-size: 112px; line-height: .92; font-weight: 800; }
+  .capa h1 span { display: block; font-weight: 400; }
+  .capa p { margin-top: 28px; font-size: 22px; line-height: 1.4; max-width: 30ch; opacity: .86; }
+
+  main { padding: 72px 96px 96px; display: grid; gap: 72px; }
+  h2 { font-size: 30px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.012em; }
+  .lide { color: var(--suave); font-size: 17px; line-height: 1.5; max-width: 62ch; }
+
+  .ideia { display: grid; grid-template-columns: 420px 56px 220px 1fr; gap: 32px; align-items: center; margin-top: 32px; }
+  .quadro { display: grid; grid-template-columns: 64px repeat(3, 1fr); grid-template-rows: 28px repeat(3, 76px); gap: 6px; font-size: 13px; color: var(--suave); }
+  .quadro .d { align-self: end; text-align: center; padding-bottom: 2px; }
+  .quadro .h { align-self: center; }
+  .quadro .a { border-radius: 10px; display: grid; place-items: center; font-weight: 600; font-size: 13px; }
+  .a.aula { background: var(--tinta); color: var(--papel); }
+  .a.vaga { border: 1.5px dashed var(--borda); color: var(--suave); font-weight: 400; background: #fff; }
+  .a.encaixa { background: var(--marca); color: var(--nanquim); }
+  .seta { font-size: 34px; color: var(--suave); text-align: center; }
+  .ideia ul { list-style: none; padding: 0; display: grid; gap: 14px; font-size: 16px; line-height: 1.45; }
+  .ideia li b { display: block; }
+  .ideia li { color: var(--suave); } .ideia li b { color: var(--nanquim); }
+
+  .paineis { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+  .painel { border-radius: 20px; padding: 48px; display: grid; gap: 40px; align-content: center; justify-items: start; border: 1px solid var(--borda); background: #fff; }
+  .painel.escuro { background: #0A0B11; border-color: #0A0B11; }
+  .painel img { display: block; }
+
+  .linha { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; }
+  .cores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+  .cor { border-radius: 16px; height: 150px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 13px; line-height: 1.35; border: 1px solid transparent; }
+  .cor b { font-size: 16px; }
+  .tamanhos { display: flex; align-items: flex-end; gap: 28px; margin-top: 28px; }
+  .tamanhos figure { display: grid; gap: 10px; justify-items: center; font-size: 12px; color: var(--suave); }
+  .tipo { margin-top: 28px; display: grid; gap: 6px; }
+  .tipo .display { font-size: 54px; line-height: 1; }
+  .tipo small { color: var(--suave); font-size: 13px; }
+</style>
+
+<section class="capa">
+  <svg viewBox="12 12 48 48" role="img" aria-label="Símbolo do Horário Inteligente">
+    <g fill="#fff">
+      <rect x="12" y="12" width="14" height="31" rx="3.2"/><rect x="12" y="46" width="14" height="14" rx="3.2"/>
+      <rect x="46" y="12" width="14" height="14" rx="3.2"/><rect x="46" y="29" width="14" height="31" rx="3.2"/>
+      <rect x="29" y="12" width="14" height="14" rx="3.2" opacity=".15"/><rect x="29" y="46" width="14" height="14" rx="3.2" opacity=".15"/>
+    </g>
+    <rect x="29" y="29" width="14" height="14" rx="3.2" fill="#FFD60A"/>
+  </svg>
+  <div>
+    <h1>Horário<span>Inteligente</span></h1>
+    <p>Grades de horário para Fatecs e Etecs, geradas e conferidas automaticamente.</p>
+  </div>
+</section>
+
+<main>
+  <section>
+    <h2>O H é um quadro de horário</h2>
+    <p class="lide">Três dias, três aulas. As aulas alocadas desenham a letra; o que sobra é horário vago. Nada no símbolo é enfeite: cada bloco é uma coisa que o sistema faz.</p>
+    <div class="ideia">
+      <div class="quadro" aria-label="Quadro de horário de três dias e três aulas">
+        <span></span><span class="d">seg</span><span class="d">ter</span><span class="d">qua</span>
+        <span class="h">1ª aula</span><span class="a aula" style="grid-row: 2 / span 2; grid-column: 2">geminada</span><span class="a vaga">vaga</span><span class="a aula">aula</span>
+        <span class="h">2ª aula</span><span class="a encaixa">encaixa</span><span class="a aula" style="grid-row: 3 / span 2; grid-column: 4">geminada</span>
+        <span class="h">3ª aula</span><span class="a aula">aula</span><span class="a vaga">vaga</span>
+      </div>
+      <div class="seta" aria-hidden="true">→</div>
+      <img src="simbolo.svg" width="220" height="220" alt="Símbolo">
+      <ul>
+        <li><b>Bloco geminado</b>Duas aulas seguidas da mesma disciplina. É a peça que o sistema nunca separa.</li>
+        <li><b>A aula que encaixa</b>Em amarelo marca-texto: o horário que o solver achou e que fecha a grade.</li>
+        <li><b>O “i” dentro do H</b>A haste da direita, com a aula solta em cima, também se lê como o i de Inteligente.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Assinaturas</h2>
+    <p class="lide">Horizontal para cabeçalho e documentos; empilhada quando a largura é pouca. O ladrilho é sempre índigo, em fundo claro ou escuro.</p>
+    <div class="paineis">
+      <div class="painel"><img src="horizontal.svg" height="72" alt="Assinatura horizontal"><img src="empilhada.svg" height="72" alt="Assinatura empilhada"></div>
+      <div class="painel escuro"><img src="horizontal-escuro.svg" height="72" alt="Assinatura horizontal em fundo escuro"><img src="empilhada-escuro.svg" height="72" alt="Assinatura empilhada em fundo escuro"></div>
+    </div>
+  </section>
+
+  <div class="linha">
+    <section>
+      <h2>Cores</h2>
+      <p class="lide">Tinta de caneta e marca-texto sobre papel: o material de quem monta horário à mão.</p>
+      <div class="cores">
+        <div class="cor" style="background:#4F46E5;color:#fff"><b>Tinta</b>#4F46E5<br>ladrilho, ações</div>
+        <div class="cor" style="background:#FFD60A;color:#141620"><b>Marca-texto</b>#FFD60A<br>só a aula que encaixa</div>
+        <div class="cor" style="background:#fff;color:#141620;border-color:#E2E4EC"><b>Papel</b>#FFFFFF<br>blocos, fundo</div>
+        <div class="cor" style="background:#141620;color:#fff"><b>Nanquim</b>#141620<br>texto</div>
+      </div>
+    </section>
+    <section>
+      <h2>Tamanhos</h2>
+      <p class="lide">De 24 px para baixo as células vagas saem, e fica só o H.</p>
+      <div class="tamanhos">
+        <figure><img src="simbolo.svg" width="96" alt=""><span>96</span></figure>
+        <figure><img src="simbolo.svg" width="48" alt=""><span>48</span></figure>
+        <figure><img src="simbolo.svg" width="32" alt=""><span>32</span></figure>
+        <figure><img src="favicon.svg" width="24" alt=""><span>24</span></figure>
+        <figure><img src="favicon.svg" width="16" alt=""><span>16</span></figure>
+      </div>
+      <div class="tipo">
+        <div class="display"><b style="font-weight:800">Horário</b> Inteligente</div>
+        <small>Inter Display, ExtraBold e Regular. Nos arquivos SVG o nome está em contornos, sem depender de fonte instalada.</small>
+      </div>
+    </section>
+  </div>
+</main>
+</html>
