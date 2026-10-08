@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.db
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+*.local
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Editores
+.vscode/
+.idea/
+.DS_Store
+
+# Artefatos de inspecao no navegador
+.playwright-mcp/

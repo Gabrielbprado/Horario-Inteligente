@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-horario}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-horario}
+      POSTGRES_DB: ${POSTGRES_DB:-horario}
+    volumes:
+      - dados-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-horario}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - '5432:5432'
+
+  api:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-horario}:${POSTGRES_PASSWORD:-horario}@db:5432/${POSTGRES_DB:-horario}
+      CORS_ORIGINS: http://localhost:5173,http://localhost:8080
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - '8000:8000'
+
+  web:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - '8080:80'
+
+volumes:
+  dados-postgres:

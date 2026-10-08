@@ -1,0 +1,45 @@
+[project]
+name = "horario-inteligente"
+version = "0.1.0"
+description = "Geracao automatica de grades de horario para unidades do Centro Paula Souza"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0.36",
+    "alembic>=1.14",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "psycopg[binary]>=3.2",
+    "ortools>=9.11",
+    "openai>=1.58",
+    "openpyxl>=3.1",
+    "reportlab>=4.2",
+    "python-multipart>=0.0.12",
+    "sse-starlette>=2.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.28",
+    "ruff>=0.8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = ["error::DeprecationWarning:app.*"]
+markers = ["slow: testes de desempenho, rodam por ultimo"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# migrations sao geradas pelo Alembic; formatacao nao e revisada a mao
+"alembic/versions/*" = ["E501"]
