@@ -1,0 +1,292 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ tipografia */
+@font-face {
+  font-family: 'Inter var';
+  font-display: swap;
+  font-weight: 100 900;
+  src: local('Inter'), local('Inter var');
+}
+
+/* ------------------------------------------------------------------- paleta
+   Grafite + indigo eletrico. Cada token e definido no `:root` claro e
+   redefinido no escuro; nenhuma cor existe apenas dentro de um media query. */
+:root {
+  color-scheme: light;
+
+  --grade-fundo: 250 250 252;
+  --grade-superficie: 255 255 255;
+  --grade-superficie-2: 244 245 249;
+  --grade-borda: 226 228 236;
+  --grade-borda-forte: 203 207 221;
+  --grade-texto: 20 22 32;
+  --grade-texto-suave: 96 102 122;
+
+  --grade-primaria: 79 70 229;
+  --grade-primaria-suave: 238 236 254;
+  --grade-primaria-texto: 255 255 255;
+
+  --grade-fatec: 190 24 93;
+  --grade-etec: 3 105 161;
+
+  /* Um tom mais escuro que o obvio (sky/green/amber-600). Em texto pequeno —
+     etiqueta de status, "obrigatoria", "Aguardando ciencia" — o 600 fica em
+     3:1 sobre branco e some. O 700 passa os 4,5:1 sem deixar de ser a mesma
+     cor. No tema escuro o problema nao existe: la' os tons claros ja tem
+     contraste de sobra sobre a superficie. */
+  --grade-ok: 21 128 61;
+  --grade-alerta: 180 83 9;
+  --grade-erro: 185 28 28;
+
+  --grade-sombra: 0 1px 2px rgb(16 18 32 / 0.04), 0 8px 24px -12px rgb(16 18 32 / 0.18);
+  --grade-raio: 0.75rem;
+
+  --grade-duracao-rapida: 150ms;
+  --grade-duracao: 240ms;
+  --grade-duracao-lenta: 350ms;
+}
+
+:root:not([data-theme='light']) {
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+
+    --grade-fundo: 10 11 17;
+    --grade-superficie: 18 20 28;
+    --grade-superficie-2: 26 29 40;
+    --grade-borda: 39 43 57;
+    --grade-borda-forte: 60 66 86;
+    --grade-texto: 237 239 246;
+    --grade-texto-suave: 148 155 178;
+
+    --grade-primaria: 129 124 255;
+    --grade-primaria-suave: 35 34 66;
+    --grade-primaria-texto: 12 12 22;
+
+    --grade-fatec: 244 114 182;
+    --grade-etec: 56 189 248;
+
+    --grade-ok: 74 222 128;
+    --grade-alerta: 250 204 21;
+    --grade-erro: 248 113 113;
+
+    --grade-sombra: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 24px -12px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --grade-fundo: 10 11 17;
+  --grade-superficie: 18 20 28;
+  --grade-superficie-2: 26 29 40;
+  --grade-borda: 39 43 57;
+  --grade-borda-forte: 60 66 86;
+  --grade-texto: 237 239 246;
+  --grade-texto-suave: 148 155 178;
+
+  --grade-primaria: 129 124 255;
+  --grade-primaria-suave: 35 34 66;
+  --grade-primaria-texto: 12 12 22;
+
+  --grade-fatec: 244 114 182;
+  --grade-etec: 56 189 248;
+
+  --grade-ok: 74 222 128;
+  --grade-alerta: 250 204 21;
+  --grade-erro: 248 113 113;
+
+  --grade-sombra: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 24px -12px rgb(0 0 0 / 0.7);
+}
+
+/* ----------------------------------------------- tokens expostos ao Tailwind */
+@theme inline {
+  --color-fundo: rgb(var(--grade-fundo));
+  --color-superficie: rgb(var(--grade-superficie));
+  --color-superficie-2: rgb(var(--grade-superficie-2));
+  --color-borda: rgb(var(--grade-borda));
+  --color-borda-forte: rgb(var(--grade-borda-forte));
+  --color-texto: rgb(var(--grade-texto));
+  --color-texto-suave: rgb(var(--grade-texto-suave));
+  --color-primaria: rgb(var(--grade-primaria));
+  --color-primaria-suave: rgb(var(--grade-primaria-suave));
+  --color-primaria-texto: rgb(var(--grade-primaria-texto));
+  --color-fatec: rgb(var(--grade-fatec));
+  --color-etec: rgb(var(--grade-etec));
+  --color-ok: rgb(var(--grade-ok));
+  --color-alerta: rgb(var(--grade-alerta));
+  --color-erro: rgb(var(--grade-erro));
+
+  --radius-grade: var(--grade-raio);
+  --shadow-grade: var(--grade-sombra);
+
+  --font-sans:
+    'Inter var', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+/* -------------------------------------------------------------------- base */
+* {
+  border-color: var(--color-borda);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-fundo);
+  color: var(--color-texto);
+  font-family: var(--font-sans);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(var(--grade-primaria) / 0.25);
+}
+
+/* Anel de foco de teclado, para todo mundo.
+   Havia uma classe utilitaria (`FOCO`, em ui.tsx) aplicada a mao — e cerca de
+   vinte controles tinham esquecido dela: o logo, a busca, os botoes de icone,
+   as celulas de aula. Todos caiam no contorno padrao do navegador, fino demais
+   sobre as cores das disciplinas. Regra global cobre tambem o que for escrito
+   depois; `:focus-visible` nao aparece no clique de mouse. */
+:focus-visible {
+  outline: 2px solid var(--color-primaria);
+  outline-offset: 2px;
+}
+
+/* barra de rolagem discreta */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--grade-borda-forte)) transparent;
+}
+
+/* ------------------------------------------------------- vidro fosco leve */
+@utility vidro {
+  background: rgb(var(--grade-superficie) / 0.72);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+
+/* -------------------------------------------------------------- skeletons */
+@utility esqueleto {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--grade-superficie-2));
+  border-radius: 0.5rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--grade-borda) / 0.9),
+      transparent
+    );
+    animation: brilho 1.4s infinite;
+  }
+}
+
+@keyframes brilho {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ------------------------------------------------- acessibilidade: animacao */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --grade-duracao-rapida: 1ms;
+    --grade-duracao: 1ms;
+    --grade-duracao-lenta: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ impressao */
+@media print {
+  /* Impressao sempre no tema claro: o escuro gasta tinta e some no papel. */
+  :root,
+  :root[data-theme='dark'] {
+    --grade-fundo: 255 255 255;
+    --grade-superficie: 255 255 255;
+    --grade-superficie-2: 245 245 245;
+    --grade-borda: 180 180 180;
+    --grade-texto: 0 0 0;
+    --grade-texto-suave: 80 80 80;
+    --grade-sombra: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 10pt;
+  }
+
+  .nao-imprimir {
+    display: none !important;
+  }
+
+  /* As cores das disciplinas identificam a aula; sem elas a grade fica ilegivel. */
+  .disciplina {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Uma aula nunca deve ser cortada entre duas paginas. */
+  tr,
+  .disciplina {
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  /* A grade e' larga: deitada aproveita melhor o papel. */
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+}
+
+/* ------------------------------------------------- cor estavel por disciplina
+   O matiz chega por `--cor-h` (ver src/lib/cores.ts); luminosidade e croma sao
+   fixos por tema para o contraste nao depender do hash. */
+.disciplina {
+  --cor-h: 250;
+  background-color: oklch(0.94 0.055 var(--cor-h));
+  border-color: oklch(0.84 0.09 var(--cor-h));
+  color: oklch(0.4 0.13 var(--cor-h));
+}
+
+:root:not([data-theme='light']) {
+  @media (prefers-color-scheme: dark) {
+    .disciplina {
+      background-color: oklch(0.29 0.055 var(--cor-h));
+      border-color: oklch(0.42 0.09 var(--cor-h));
+      color: oklch(0.87 0.11 var(--cor-h));
+    }
+  }
+}
+
+:root[data-theme='dark'] .disciplina {
+  background-color: oklch(0.29 0.055 var(--cor-h));
+  border-color: oklch(0.42 0.09 var(--cor-h));
+  color: oklch(0.87 0.11 var(--cor-h));
+}

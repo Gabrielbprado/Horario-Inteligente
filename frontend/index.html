@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content="Grades de horário para Fatecs e Etecs, geradas e conferidas automaticamente." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Horário Inteligente</title>
+    <!-- Barra do navegador no movel: os dois valores sao o `--grade-fundo` de
+         cada tema em `src/index.css`. -->
+    <meta name="theme-color" content="#fafafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0b11" media="(prefers-color-scheme: dark)" />
+    <!--
+      Tema antes da primeira pintura. O React so aplica o atributo depois de
+      montar, e ate la' o navegador ja pintou o fundo do `:root` — quem escolheu
+      o tema escuro via a tela clarear por um quadro a cada carregamento.
+      A chave tem de ser a mesma de `src/componentes/tema.tsx`.
+    -->
+    <script>
+      try {
+        var t = localStorage.getItem('horario-tema')
+        if (t === 'claro') document.documentElement.setAttribute('data-theme', 'light')
+        else if (t === 'escuro') document.documentElement.setAttribute('data-theme', 'dark')
+      } catch (e) {
+        /* localStorage bloqueado: fica no tema do sistema */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
